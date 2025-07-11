@@ -39,9 +39,24 @@ export const bookAppointment = async (req, res) => {
   }
 };
 
+// Get doctors by speciality
+export const getDoctorsBySpeciality = async (req, res) => {
+  const { speciality } = req.body;
+
+  try {
+    if (!speciality) return res.status(400).json({ msg: 'Speciality is required' });
+
+    const doctors = await Doctor.find({ speciality }).select('-password');
+    res.json(doctors);
+  } catch (err) {
+    res.status(500).json({ msg: 'Server error', error: err.message });
+  }
+};
+
+
 // Get available time slots for doctor on date
 export const getAvailableSlots = async (req, res) => {
-  const { doctorId, date } = req.query;
+  const { doctorId, date } = req.body;
 
   try {
     const appointments = await Appointment.find({ doctor: doctorId, date });
@@ -56,7 +71,7 @@ export const getAvailableSlots = async (req, res) => {
 
 // Get upcoming appointments
 export const getUpcomingAppointments = async (req, res) => {
-  const { role, userId } = req.query;
+  const { role, userId } = req.body;
   const today = new Date().toISOString().slice(0, 10);
 
   try {
@@ -73,7 +88,7 @@ export const getUpcomingAppointments = async (req, res) => {
 
 // Get past appointments
 export const getAppointmentHistory = async (req, res) => {
-  const { role, userId } = req.query;
+  const { role, userId } = req.body;
   const today = new Date().toISOString().slice(0, 10);
 
   try {

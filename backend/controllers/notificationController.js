@@ -2,7 +2,7 @@ import Doctor from '../models/Doctor.js';
 import Patient from '../models/Patient.js';
 
 export const getNotifications = async (req, res) => {
-  const { role, userId } = req.query;
+  const { role, userId } = req.body;
   try {
     const user = role === 'doctor'
       ? await Doctor.findById(userId)

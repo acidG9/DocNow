@@ -2,9 +2,12 @@ import Doctor from '../models/Doctor.js';
 
 // GET doctor profile
 export const getDoctorProfile = async (req, res) => {
+  const { doctorId } = req.body;
+
   try {
-    const doctor = await Doctor.findById(req.params.id).select('-password');
+    const doctor = await Doctor.findById(doctorId).select('-password');
     if (!doctor) return res.status(404).json({ msg: 'Doctor not found' });
+
     res.json(doctor);
   } catch (err) {
     res.status(500).json({ msg: 'Server error', error: err.message });
@@ -13,9 +16,10 @@ export const getDoctorProfile = async (req, res) => {
 
 // UPDATE doctor profile
 export const updateDoctorProfile = async (req, res) => {
-  const { speciality, experience, summary, college, fees } = req.body;
+  const { doctorId, speciality, experience, summary, college, fees } = req.body;
+
   try {
-    const doctor = await Doctor.findById(req.params.id);
+    const doctor = await Doctor.findById(doctorId);
     if (!doctor) return res.status(404).json({ msg: 'Doctor not found' });
 
     doctor.speciality = speciality || doctor.speciality;
@@ -25,19 +29,10 @@ export const updateDoctorProfile = async (req, res) => {
     doctor.fees = fees || doctor.fees;
 
     await doctor.save();
-    res.json({ msg: 'Profile updated', doctor });
+
+    const updatedDoctor = await Doctor.findById(doctorId).select('-password');
+    res.json({ msg: 'Profile updated', doctor: updatedDoctor });
   } catch (err) {
     res.status(500).json({ msg: 'Error updating profile', error: err.message });
-  }
-};
-
-// GET earnings
-export const getEarnings = async (req, res) => {
-  try {
-    const doctor = await Doctor.findById(req.params.id);
-    if (!doctor) return res.status(404).json({ msg: 'Doctor not found' });
-    res.json({ earning: doctor.earning });
-  } catch (err) {
-    res.status(500).json({ msg: 'Error getting earnings', error: err.message });
   }
 };

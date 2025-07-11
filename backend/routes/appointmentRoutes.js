@@ -4,15 +4,17 @@ import {
   getAvailableSlots,
   getUpcomingAppointments,
   getAppointmentHistory,
-  cancelAppointment
+  cancelAppointment,
+  getDoctorsBySpeciality
 } from '../controllers/appointmentController.js';
 
 const router = express.Router();
 
 router.post('/book', bookAppointment);
-router.get('/slots', getAvailableSlots);
-router.get('/upcoming', getUpcomingAppointments);
-router.get('/history', getAppointmentHistory);
+router.post('/slots', getAvailableSlots);
+router.post('/upcoming', getUpcomingAppointments);
+router.post('/history', getAppointmentHistory);
 router.delete('/cancel/:appointmentId', cancelAppointment);
+router.post('/doctors-by-speciality', getDoctorsBySpeciality);
 
 export default router;
