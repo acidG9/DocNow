@@ -32,6 +32,7 @@ const Login = () => {
         const res = await API.post("/auth/login", lFormData);
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", lFormData.role);
+        localStorage.setItem("id", res.data.user._id);
         navigate(
           lFormData.role === "doctor" ? "/doctor/home" : "/patient/home"
         );
@@ -44,6 +45,7 @@ const Login = () => {
         });
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", rFormData.role);
+        localStorage.setItem("id", res.data.user._id);
         navigate(
           rFormData.role === "doctor" ? "/doctor/home" : "/patient/home"
         );

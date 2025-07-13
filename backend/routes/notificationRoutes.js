@@ -5,7 +5,7 @@ import {
 } from '../controllers/notificationController.js';
 
 const router = express.Router();
-router.post('/', getNotifications);
+router.post('/find', getNotifications);
 router.put('/clear', clearNotification);
 
 export default router;

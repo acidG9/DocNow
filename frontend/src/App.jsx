@@ -5,7 +5,9 @@ import Login from "./Pages/Login";
 import DoctorHome from "./Pages/DoctorHome";
 import DoctorProfile from "./Pages/DoctorProfile";
 import PatientHome from "./Pages/PatientHome";
-import PatientAppointment from "./Pages/PatientAppointment";
+import PatientBookDoc from "./Pages/PatientBookDoc";
+import Notifications from "./Pages/Notifications";
+import Appointments from "./Pages/Appointments";
 
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
@@ -115,10 +117,28 @@ function App() {
         }
       />
       <Route
-        path="/patient/appointments"
+        path="/patient/bookDoc"
         element={
           <ProtectedRoute allowedRoles={["patient"]}>
-            <PatientAppointment />
+            <PatientBookDoc />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Comman Routes */}
+      <Route
+        path="/appointments"
+        element={
+          <ProtectedRoute allowedRoles={["patient", "doctor"]}>
+            <Appointments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/notifications"
+        element={
+          <ProtectedRoute allowedRoles={["patient", "doctor"]}>
+            <Notifications />
           </ProtectedRoute>
         }
       />

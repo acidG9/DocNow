@@ -45,3 +45,7 @@ export const register = async (req, res) => {
     res.status(500).json({ msg: 'Server error', error: err.message });
   }
 };
+
+export const verifyAuth = (req, res) => {
+  res.status(200).json({ valid: true, user: req.user });
+};
