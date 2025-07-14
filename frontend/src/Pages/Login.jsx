@@ -8,6 +8,14 @@ const Login = () => {
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
+  const showToast = (message, success = true) => {
+    const toast = document.createElement("div");
+    toast.className = `toast ${success ? "success" : "error"}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  };
+
   const [rFormData, setRFormData] = React.useState({
     username: "",
     password: "",
@@ -51,7 +59,8 @@ const Login = () => {
         );
       }
     } catch (err) {
-      alert(err.response?.data?.msg || "Something went wrong");
+      showToast(err.response?.data?.msg, false);
+      console.log(err);
     } finally {
       setLoading(false);
     }

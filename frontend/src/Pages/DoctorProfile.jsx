@@ -10,6 +10,14 @@ const DoctorProfile = () => {
 
   const doctorId = localStorage.getItem("id");
 
+  const showToast = (message, success = true) => {
+    const toast = document.createElement("div");
+    toast.className = `toast ${success ? "success" : "error"}`;
+    toast.innerText = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  };
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -51,10 +59,10 @@ const DoctorProfile = () => {
       });
       setProfile(res.data.doctor);
       setEditing(false);
-      alert("Profile updated successfully!");
+      showToast("Profile updated successfully!", true);
     } catch (err) {
       console.error("Error updating profile:", err);
-      alert("Failed to update profile.");
+      showToast("Failed to update profile", false);
     } finally {
       setUpdating(false);
     }
