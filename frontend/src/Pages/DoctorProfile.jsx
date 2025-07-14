@@ -88,11 +88,28 @@ const DoctorProfile = () => {
       <div className="profile-section">
         <label>Speciality:</label>
         {editing ? (
-          <input
+          <select
             name="speciality"
             value={formData.speciality}
             onChange={handleChange}
-          />
+          >
+            <option value="General Physician">General Physician</option>
+            <option value="Pediatrician">Pediatrician</option>
+            <option value="Gynecologist">Gynecologist</option>
+            <option value="Orthopedic">Orthopedic</option>
+            <option value="Psychiatrist">Psychiatrist</option>
+            <option value="Cardiologist">Cardiologist</option>
+            <option value="Radiologist">Radiologist</option>
+            <option value="Pathologist">Pathologist</option>
+            <option value="Surgeon">Surgeon</option>
+            <option value="Neurosurgeon">Neurosurgeon</option>
+            <option value="Pediatric Surgeon">Pediatric Surgeon</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Ayurveda Specialist">Ayurveda Specialist</option>
+            <option value="Homeopathy Doctor">Homeopathy Doctor</option>
+            <option value="Physiotherapist">Physiotherapist</option>
+            <option value="Sexologist">Sexologist</option>
+          </select>
         ) : (
           <p>{profile.speciality}</p>
         )}
