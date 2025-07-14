@@ -9,6 +9,20 @@ const PatientAppointment = () => {
   const userId = localStorage.getItem("id");
   const role = localStorage.getItem("role");
 
+  const handleCancel = async (appointmentId) => {
+    try {
+      const confirm = window.confirm(
+        "Are you sure you want to cancel this appointment?"
+      );
+      if (!confirm) return;
+
+      await API.delete(`/appointments/cancel/${appointmentId}`);
+      setUpcoming((prev) => prev.filter((a) => a._id !== appointmentId));
+    } catch (err) {
+      console.error("Error cancelling appointment:", err);
+    }
+  };
+
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
@@ -56,6 +70,11 @@ const PatientAppointment = () => {
                   {" "}
                   (<em>{a.doctor.speciality}</em>)
                 </>
+              )}
+              {role === "doctor" && (
+                <span className="cancel" onClick={() => handleCancel(a._id)}>
+                  Cancel
+                </span>
               )}
             </li>
           ))}

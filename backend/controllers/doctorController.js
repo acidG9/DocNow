@@ -1,4 +1,5 @@
 import Doctor from '../models/Doctor.js';
+import Appointment from '../models/Appointment.js';
 
 // GET doctor profile
 export const getDoctorProfile = async (req, res) => {
@@ -8,7 +9,9 @@ export const getDoctorProfile = async (req, res) => {
     const doctor = await Doctor.findById(doctorId).select('-password');
     if (!doctor) return res.status(404).json({ msg: 'Doctor not found' });
 
-    res.json(doctor);
+    const totalAppointments = await Appointment.countDocuments({ doctor: doctorId });
+
+    res.json({ ...doctor.toObject(), totalAppointments });
   } catch (err) {
     res.status(500).json({ msg: 'Server error', error: err.message });
   }
