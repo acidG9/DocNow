@@ -25,7 +25,7 @@ const PatientHome = () => {
     return (
       <div className="loading-screen">
         <div className="spinner" />
-        <p>Loading Appointments...</p>
+        <p>Loading Home page...</p>
       </div>
     );
 
